@@ -1,0 +1,19 @@
+LINK PENYIMPANAN DATASET (GOOGLE DRIVE)
+
+--> URL Drive: https://drive.google.com/drive/u/0/folders/1z3WONG9b4VJgQvSFJSAekK52HBUA5lKG
+
+Di dalam Google Drive tersebut, terdapat 2 folder dataset utama:
+1. Folder "DATA ASLI"
+   - Berisi file mentah hasil download langsung dari Kaggle.
+
+2. Folder "DATA TRANSLATE (Tugas UAS")
+   - Berisi dataset yang sudah diolah dan dipakai di aplikasi web.
+   - Teks laporan medis sudah diubah ke Bahasa Indonesia.
+   - Hanya berisi 500 data rekam medis acak (sampling) untuk 
+     mengoptimalkan kecepatan loading server saat pengujian.
+
+SUMBER DATASET ASLI (KAGGLE)
+Dataset utama yang digunakan diambil dari platform Kaggle:
+
+--> URL Kaggle: https://www.kaggle.com/datasets/tboyle10/medicaltranscriptions
+Nama Dataset: Medical Transcriptions (MTSamples)

@@ -1,0 +1,313 @@
+/* --- EXTRA CLEAN GOOGLE LOOK & FEEL — NO EXTRA ICONS --- */
+:root {
+    --bg-app: #ffffff;
+    --font-google: 'Inter', sans-serif;
+    --text-main: #202124;
+    --text-sub: #70757a;
+    --border-gray: #dadce0;
+    --google-blue: #4285f4;
+    --google-red: #ea4335;
+    --google-yellow: #fbbc05;
+    --google-green: #34a853;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-google);
+    background-color: var(--bg-app);
+    color: var(--text-main);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.app-container {
+    flex: 1;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+/* --- LAYOUT ADAPTIF (BERANDA VS HASIL CARI) --- */
+
+/* State 1: Saat Beranda Depan (Tengah Layar) */
+body.home-page .search-hero-section {
+    margin-top: 22vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0 20px;
+}
+body.home-page .brand-logo-container {
+    margin-bottom: 28px;
+    text-align: center;
+    user-select: none;
+}
+body.home-page .brand-logo-text {
+    font-size: 3.4rem; /* Ukuran pas untuk Medical Transcriptions */
+    font-weight: 700;
+    letter-spacing: -1.5px;
+}
+body.home-page .search-form {
+    width: 100%;
+    max-width: 584px;
+}
+
+/* State 2: Saat Hasil Muncul (Bergeser Ke Atas Kiri Rapi) */
+body.has-results .search-hero-section {
+    display: flex;
+    align-items: center;
+    padding: 20px 40px;
+    border-bottom: 1px solid #ebebeb;
+    background-color: #ffffff;
+    gap: 30px;
+}
+body.has-results .brand-logo-container {
+    margin-bottom: 0;
+}
+body.has-results .brand-logo-text {
+    font-size: 1.25rem;
+    letter-spacing: -0.5px;
+}
+body.has-results .dataset-brief-desc {
+    display: none;
+}
+body.has-results .search-form {
+    width: 100%;
+    max-width: 630px;
+}
+
+/* SKEMA WARNA LOGO GOOGLE */
+.c-blue { color: var(--google-blue); }
+.c-red { color: var(--google-red); }
+.c-yellow { color: var(--google-yellow); }
+.c-green { color: var(--google-green); }
+
+.dataset-brief-desc {
+    display: block;
+    font-size: 0.85rem;
+    color: #70757a;
+    margin-top: 14px;
+    max-width: 540px;
+    line-height: 1.5;
+}
+
+/* --- KAPSUL KOLOM PENCARIAN --- */
+.search-box-wrapper {
+    background: #ffffff;
+    display: flex;
+    border: 1px solid var(--border-gray);
+    border-radius: 24px;
+    height: 46px;
+    padding: 0 16px;
+    align-items: center;
+    width: 100%;
+    transition: box-shadow 0.1s;
+}
+.search-box-wrapper:hover, .search-box-wrapper:focus-within {
+    box-shadow: 0 1px 6px rgba(32,33,36,0.28);
+    border-color: rgba(223,225,229,0);
+}
+.search-icon-left {
+    color: #9aa0a6;
+    margin-right: 12px;
+    font-size: 0.95rem;
+}
+.search-box-wrapper input {
+    background: transparent;
+    border: none;
+    outline: none;
+    color: var(--text-main);
+    font-size: 1rem;
+    font-family: inherit;
+    flex-grow: 1;
+}
+
+/* Tombol X Clear Search di Sebelah Kanan */
+.search-icons-right {
+    display: flex;
+    align-items: center;
+}
+.btn-clear-search {
+    color: #70757a;
+    text-decoration: none;
+    font-size: 1.1rem;
+    padding: 5px;
+}
+
+/* --- GAYA TAUTAN MENU (KAGGLER & GDRIVE) --- */
+.google-links-container {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    margin-top: 24px;
+}
+
+.google-btn-link {
+    background-color: #f8fafc;
+    border: 1px solid #dadce0;
+    color: #3c4043;
+    padding: 10px 16px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    border-radius: 6px;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.15s ease;
+}
+
+.google-btn-link:hover {
+    background-color: #f1f3f4;
+    border-color: #cdd1d4;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+    color: #202124;
+}
+
+/* Badge Keterangan Algoritma */
+.engine-info-badge {
+    margin-top: 40px;
+    font-size: 0.8rem;
+    color: var(--text-sub);
+    text-align: center;
+}
+.engine-info-badge i {
+    color: var(--google-green);
+    margin-right: 4px;
+}
+
+/* --- AREA CARD HASIL PENCARIAN --- */
+.results-container {
+    padding: 20px 40px;
+    max-width: 800px;
+    margin-left: 155px; /* Standar Kerapian Lekukan Hasil Google */
+}
+.results-stats-bar {
+    font-size: 0.85rem;
+    color: var(--text-sub);
+    margin-bottom: 24px;
+}
+.stats-count { font-weight: 600; color: var(--text-main); }
+
+.results-list-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 26px;
+}
+.medical-result-card {
+    background: #ffffff;
+}
+
+.result-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+.specialty-tag {
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: var(--text-sub);
+    background: #f1f3f4;
+    padding: 2px 6px;
+    border-radius: 4px;
+}
+.result-title-link {
+    font-size: 1.25rem;
+    font-weight: 400;
+    color: #1a0dab;
+    margin-top: 5px;
+    cursor: pointer;
+}
+.result-title-link:hover {
+    text-decoration: underline;
+}
+
+/* SCORE BADGE BM25 */
+.score-badge-box {
+    background-color: #f1f8f5;
+    border: 1px solid #d3ebd9;
+    padding: 4px 8px;
+    border-radius: 4px;
+    text-align: center;
+}
+.score-label { display: block; font-size: 0.5rem; font-weight: 700; color: var(--google-green); }
+.score-value { font-size: 0.95rem; font-weight: 700; color: #137333; }
+
+.result-body-section { margin-top: 10px; }
+.section-title { font-size: 0.7rem; color: var(--text-sub); text-transform: uppercase; font-weight: 700; margin-bottom: 2px; }
+
+.description-area p {
+    font-size: 0.88rem;
+    line-height: 1.5;
+    color: #4d5156;
+}
+
+.text-preview, .text-full { font-size: 0.88rem; line-height: 1.55; color: #4d5156; }
+.text-full {
+    background-color: #f8fafc;
+    padding: 12px;
+    border-radius: 6px;
+    border: 1px solid var(--border-gray);
+    white-space: pre-line;
+}
+.btn-expand-dropdown {
+    background: none;
+    border: none;
+    color: var(--google-blue);
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 2px;
+}
+.btn-expand-dropdown:hover { text-decoration: underline; }
+
+.result-card-footer {
+    margin-top: 12px;
+    padding-top: 6px;
+    border-top: 1px dashed #ebebeb;
+    font-size: 0.78rem;
+    color: var(--text-sub);
+}
+
+/* NO DATA STATE */
+.empty-state-container {
+    padding: 40px 20px;
+    text-align: center;
+}
+.empty-icon { font-size: 2.2rem; color: #dbeafe; margin-bottom: 12px; }
+.empty-state-container h3 { font-size: 1.1rem; margin-bottom: 4px; }
+.empty-state-container p { font-size: 0.88rem; color: var(--text-sub); }
+.empty-tip { margin-top: 8px; font-style: italic; font-size: 0.85rem; color: var(--text-sub); }
+
+/* STABILO KUNING GOOGLE (EFEK COCOK KATA) */
+.google-mark {
+    background-color: var(--google-yellow);
+    color: #000000;
+    border-radius: 2px;
+}
+
+.hidden-content { display: none !important; }
+
+@media (max-width: 992px) {
+    body.has-results .search-hero-section { flex-direction: column; align-items: flex-start; padding: 20px; gap: 8px; }
+    .results-container { padding: 20px; margin-left: 0; }
+}
+
+/* --- FOOTER GOOGLE LOOK --- */
+.app-footer {
+    background-color: #f2f2f2;
+    border-top: 1px solid #e4e4e4;
+    font-size: 0.8rem;
+    color: #70757a;
+    padding: 14px 40px;
+    display: flex;
+    justify-content: space-between;
+    margin-top: auto;
+}
+.footer-right { font-weight: 500; }

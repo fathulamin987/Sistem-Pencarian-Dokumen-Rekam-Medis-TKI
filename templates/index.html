@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Engine Rekam Medis</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body class="{% if query %}has-results{% else %}home-page{% endif %}">
+
+    <div class="app-container">
+        
+        <section class="search-hero-section">
+            <div class="brand-logo-container">
+                <h1 class="brand-logo-text">
+                    <span class="c-blue">M</span><span class="c-red">e</span><span class="c-yellow">d</span><span class="c-blue">i</span><span class="c-green">c</span><span class="c-red">a</span><span class="c-blue">l</span>
+                    <span class="c-red">T</span><span class="c-yellow">r</span><span class="c-blue">a</span><span class="c-green">n</span><span class="c-red">s</span><span class="c-blue">c</span><span class="c-red">r</span><span class="c-yellow">i</span><span class="c-blue">p</span><span class="c-green">t</span><span class="c-red">i</span><span class="c-blue">o</span><span class="c-green">n</span><span class="c-red">s</span>
+                </h1>
+                <p class="dataset-brief-desc">Sistem pencarian rekam medis yang mengindeks dokumen catatan dokter, laporan operasi, riwayat penyakit, dan gejala klinis pasien berdasarkan kesamaan kata kunci menggunakan algoritma BM25.</p>
+            </div>
+
+            <form method="POST" action="/" class="search-form">
+                <div class="search-box-wrapper">
+                    <i class="fa-solid fa-magnifying-glass search-icon-left"></i>
+                    <input type="text" id="user-query" name="query" value="{{ query }}" placeholder="Cari transkripsi klinis..." autocomplete="off" required>
+                    
+                    {% if query %}
+                        <div class="search-icons-right">
+                            <a href="/" class="btn-clear-search" title="Bersihkan Pencarian"><i class="fa-solid fa-xmark"></i></a>
+                        </div>
+                    {% endif %}
+                </div>
+                
+                {% if not query %}
+                <div class="google-links-container">
+                    <a href="https://www.kaggle.com/datasets/tboyle10/medicaltranscriptions" target="_blank" class="google-btn-link">
+                        <i class="fa-brands fa-kaggle" style="color: #20beff;"></i> Dataset Asli Kaggle
+                    </a>
+                    <a href="https://drive.google.com/drive/folders/1z3WONG9b4VJgQvSFJSAekK52HBUA5lKG?usp=sharing" target="_blank" class="google-btn-link">
+                        <i class="fa-brands fa-google-drive" style="color: #ffba00;"></i> Google Drive Tugas
+                    </a>
+                </div>
+
+                <div class="engine-info-badge">
+                    <i class="fa-solid fa-circle-check"></i> Menggunakan Pembobotan Algoritma BM25 Okapi
+                </div>
+                {% endif %}
+            </form>
+        </section>
+
+        {% if query %}
+            <main class="results-container">
+                <div class="results-stats-bar">
+                    Menampilkan <span class="stats-count">{{ results|length }}</span> dokumen rekam medis untuk kata kunci <strong>"{{ query }}"</strong>
+                </div>
+
+                {% if results %}
+                    <div class="results-list-stack">
+                        {% for result in results %}
+                            <article class="medical-result-card">
+                                
+                                <div class="result-card-header">
+                                    <div class="meta-identity">
+                                        <span class="specialty-tag">{{ result.specialty }}</span>
+                                        <h2 class="result-title-link" onclick="toggleCardExpand(this)">
+                                            {{ result.sample_name }}
+                                        </h2>
+                                    </div>
+                                    <div class="score-badge-box">
+                                        <span class="score-label">SKOR BM25</span>
+                                        <span class="score-value">{{ result.score }}</span>
+                                    </div>
+                                </div>
+
+                                <div class="result-body-section description-area">
+                                    <h4 class="section-title">Ringkasan Deskripsi</h4>
+                                    <p class="data-to-highlight">{{ result.description }}</p>
+                                </div>
+
+                                <div class="result-body-section transcription-area">
+                                    <h4 class="section-title">Isi Transkripsi Medis (Hasil Terjemahan)</h4>
+                                    <div class="transcription-interactive-box">
+                                        <div class="text-preview data-to-highlight">{{ result.transcription[:250] }}...</div>
+                                        <div class="text-full data-to-highlight hidden-content">{{ result.transcription }}</div>
+                                        
+                                        <button type="button" class="btn-expand-dropdown" onclick="toggleFromButton(this)">
+                                            <i class="fa-solid fa-chevron-down"></i> Tampilkan dokumen utuh
+                                        </button>
+                                    </div>
+                                </div>
+
+                                {% if result.keywords and result.keywords != 'nan' %}
+                                <div class="result-card-footer data-to-highlight">
+                                    <strong>Kata Kunci Terkait:</strong> {{ result.keywords }}
+                                </div>
+                                {% endif %}
+                                
+                            </article>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <div class="empty-state-container">
+                        <i class="fa-solid fa-magnifying-glass-blur empty-icon"></i>
+                        <h3>Data Tidak Ditemukan</h3>
+                        <p>Tidak ada dokumen rekam medis yang cocok dengan kata kunci <strong>"{{ query }}"</strong>.</p>
+                        <p class="empty-tip">Saran: Gunakan istilah bahasa Indonesia yang umum dalam rekam medis terjemahanmu (contoh: <em>nyeri, operasi, darah, pemeriksaan</em>).</p>
+                    </div>
+                {% endif %}
+            </main>
+        {% endif %}
+
+    </div>
+
+    <footer class="app-footer">
+        <div class="footer-left">240411100217 - Fathul Amin</div>
+        <div class="footer-right">
+            <span>Tugas UAS TKI - Medical Transcriptions</span>
+        </div>
+    </footer>
+
+    <script>
+        function toggleCardExpand(titleElement) {
+            const card = titleElement.closest('.medical-result-card');
+            const btn = card.querySelector('.btn-expand-dropdown');
+            toggleFromButton(btn);
+        }
+
+        function toggleFromButton(button) {
+            const container = button.parentElement;
+            const previewText = container.querySelector('.text-preview');
+            const fullText = container.querySelector('.text-full');
+            
+            if (fullText.classList.contains('hidden-content')) {
+                fullText.classList.remove('hidden-content');
+                previewText.classList.add('hidden-content');
+                button.innerHTML = '<i class="fa-solid fa-chevron-up"></i> Sembunyikan dokumen';
+            } else {
+                fullText.classList.add('hidden-content');
+                previewText.classList.remove('hidden-content');
+                button.innerHTML = '<i class="fa-solid fa-chevron-down"></i> Tampilkan dokumen utuh';
+            }
+        }
+
+        // Efek Stabilo Kuning Otomatis Berdasarkan Input Pencarian
+        document.addEventListener("DOMContentLoaded", function() {
+            const queryInput = document.getElementById("user-query");
+            if (!queryInput) return;
+            
+            const rawQuery = queryInput.value.trim();
+            if (rawQuery === "") return;
+
+            const words = rawQuery.toLowerCase().split(/\s+/).filter(w => w.length > 2);
+            if (words.length === 0) return;
+
+            const elements = document.querySelectorAll(".data-to-highlight");
+            
+            elements.forEach(el => {
+                let textHTML = el.innerHTML;
+                words.forEach(word => {
+                    const regex = new RegExp(`\\b(${word})\\b`, "gi");
+                    textHTML = textHTML.replace(regex, `<mark class="google-mark">$1</mark>`);
+                });
+                el.innerHTML = textHTML;
+            });
+        });
+    </script>
+</body>
+</html>
