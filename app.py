@@ -7,9 +7,7 @@ from rank_bm25 import BM25Okapi
 # KONFIGURASI KHUSUS: Menggabungkan folder static ke folder templates
 app = Flask(__name__, template_folder='templates', static_folder='templates')
 
-# =========================================================================
-# PROSES 1: MEMBACA DATABASE DARI FOLDER DATA (MEMENUHI INDIKATOR 2)
-# =========================================================================
+# PROSES 1: MEMBACA DATABASE DARI FOLDER DATA 
 JSON_PATH = os.path.join("data", "dataset_medis.json")
 if not os.path.exists(JSON_PATH):
     raise FileNotFoundError(f"Berkas database {JSON_PATH} tidak ditemukan! Jalankan 'python konversi.py' terlebih dahulu.")
@@ -18,9 +16,8 @@ with open(JSON_PATH, "r", encoding="utf-8") as f:
     dataset = json.load(f)
 
 
-# =========================================================================
 # PROSES 2: PROSES TOKENSASI & INDEKSING ALGORITMA BM25 OKAPI
-# =========================================================================
+
 print("Mengindeks korpus dokumen medis menggunakan BM25 Okapi...")
 
 def tokenize_indonesia(text):
@@ -65,7 +62,7 @@ def index():
                         "description": dataset[idx]['description'],
                         "transcription": dataset[idx]['transcription'],
                         "keywords": dataset[idx]['keywords'],
-                        "score": round(float(score), 4) # MEMUNCULKAN NILAI KESAMAAN (MEMENUHI INDIKATOR 4)
+                        "score": round(float(score), 4) # MEMUNCULKAN NILAI KESAMAAN 
                     })
                     
     return render_template('index.html', query=query, results=results)
