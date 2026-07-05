@@ -2,6 +2,9 @@
 
 Aplikasi web untuk mencari dokumen rekam medis (Medical Transcriptions) berbahasa Indonesia menggunakan metode **Information Retrieval**. Sistem akan mencari, mengurutkan, dan menampilkan dokumen rekam medis yang paling relevan berdasarkan kata kunci yang dimasukkan pengguna.
 
+sumber dataset : https://www.kaggle.com/datasets/tboyle10/medicaltranscriptions
+
+
 ## Fitur Utama
 
 - **Pencarian Rekam Medis**  
